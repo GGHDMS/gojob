@@ -20,6 +20,14 @@ func repeatMe(words ...string) {
 	fmt.Println(words)
 }
 
+func lenAndLower(name string) (length int, n string) {
+	fmt.Println(name)
+	defer fmt.Println("bye")
+	length = len(name)
+	n = strings.ToLower(name)
+	return
+}
+
 func main() {
 
 	n := "sm"
@@ -36,4 +44,6 @@ func main() {
 	fmt.Println(lenAndUpper(name))
 
 	repeatMe("a", "b", "c")
+
+	fmt.Println(lenAndLower("go"))
 }
