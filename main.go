@@ -23,4 +23,15 @@ func main() {
 	for k, v := range m {
 		fmt.Println(k, v)
 	}
+
+	p := Person{"seokmun", 21, []string{"korean", "english"}}
+	fmt.Println(p)
+	p = Person{name: "seokmun", age: 20, favFood: []string{"korean", "english"}}
+	fmt.Println(p)
+}
+
+type Person struct {
+	name    string
+	age     int
+	favFood []string
 }
