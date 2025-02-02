@@ -2,21 +2,50 @@ package main
 
 import (
 	"fmt"
-	"gojob/accounts"
-	"log"
+	"gojob/mydict"
 )
 
 func main() {
-	account := accounts.NewAccount("test")
-	fmt.Println(account)
-	account.Deposit(10000)
-	fmt.Println(account)
-	err := account.Withdraw(1000)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(account)
+	dictionary := mydict.Dictionary{}
+	dictionary["hello"] = "hello"
+	fmt.Println(dictionary)
 
-	account.ChangeOwner("seokmun")
-	fmt.Println(account.Owner())
+	search, err := dictionary.Search("hello")
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(search)
+	}
+
+	search, err = dictionary.Search("world")
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(search)
+	}
+
+	fmt.Println("=================")
+	err = dictionary.Add("hello", "hello")
+	fmt.Println(err)
+	err = dictionary.Add("world", "hello")
+	fmt.Println(err)
+
+	err = dictionary.Update("hello", "bye")
+	search, err = dictionary.Search("hello")
+
+	fmt.Println(search)
+
+	err = dictionary.Update("no", "bye")
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(dictionary.Search("no"))
+	}
+
+	dictionary.Delete("world")
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(dictionary.Search("world"))
+	}
 }
