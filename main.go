@@ -1,8 +1,6 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func supperAdd(numbers ...int) int {
 	var total int
@@ -14,7 +12,14 @@ func supperAdd(numbers ...int) int {
 	return total
 }
 
+func canIDrink(age int) bool {
+	if koreanAge := age + 2; koreanAge < 20 {
+		return false
+	}
+
+	return true
+}
+
 func main() {
-	total := supperAdd(1, 2, 3, 4, 5, 6)
-	fmt.Println(total)
+	fmt.Println(canIDrink(16))
 }
