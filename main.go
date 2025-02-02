@@ -17,4 +17,10 @@ func main() {
 
 	slice = append(slice, 4)
 	fmt.Println(slice)
+
+	m := map[string]int{"a": 1, "b": 2}
+
+	for k, v := range m {
+		fmt.Println(k, v)
+	}
 }
