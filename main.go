@@ -1,37 +1,22 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"gojob/accounts"
+	"log"
+)
 
 func main() {
-	a := 4
-	b := &a
-
-	*b = 5
-	fmt.Println(*b)
-
-	slice := []int{1, 2, 3}
-	fmt.Println(slice)
-
-	arr := [5]string{"a", "b", "c"}
-	fmt.Println(arr)
-
-	slice = append(slice, 4)
-	fmt.Println(slice)
-
-	m := map[string]int{"a": 1, "b": 2}
-
-	for k, v := range m {
-		fmt.Println(k, v)
+	account := accounts.NewAccount("test")
+	fmt.Println(account)
+	account.Deposit(10000)
+	fmt.Println(account)
+	err := account.Withdraw(1000)
+	if err != nil {
+		log.Fatal(err)
 	}
+	fmt.Println(account)
 
-	p := Person{"seokmun", 21, []string{"korean", "english"}}
-	fmt.Println(p)
-	p = Person{name: "seokmun", age: 20, favFood: []string{"korean", "english"}}
-	fmt.Println(p)
-}
-
-type Person struct {
-	name    string
-	age     int
-	favFood []string
+	account.ChangeOwner("seokmun")
+	fmt.Println(account.Owner())
 }
