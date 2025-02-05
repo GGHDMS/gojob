@@ -1,51 +1,53 @@
 package main
 
 import (
+	"errors"
 	"fmt"
-	"gojob/mydict"
+	"net/http"
 )
 
+var errHttp = errors.New("http erro")
+
 func main() {
-	dictionary := mydict.Dictionary{}
-	dictionary["hello"] = "hello"
-	fmt.Println(dictionary)
 
-	search, err := dictionary.Search("hello")
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(search)
+	result := map[string]string{}
+
+	urls := []string{
+		"https://www.airbnb.com/",
+		"https://www.google.com/",
+		"https://www.amazon.com/",
+		"https://www.reddit.com/",
+		"https://www.google.com/",
+		"https://soundcloud.com/",
+		"https://www.facebook.com/",
+		"https://www.instagram.com/",
+		"https://academy.nomadcoders.co/",
 	}
 
-	search, err = dictionary.Search("world")
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(search)
+	for _, url := range urls {
+		code := "OK"
+
+		err := hitUrl(url)
+
+		if err != nil {
+			code = "ERR"
+		}
+
+		result[url] = code
 	}
 
-	fmt.Println("=================")
-	err = dictionary.Add("hello", "hello")
-	fmt.Println(err)
-	err = dictionary.Add("world", "hello")
-	fmt.Println(err)
+	fmt.Println(result)
 
-	err = dictionary.Update("hello", "bye")
-	search, err = dictionary.Search("hello")
+}
 
-	fmt.Println(search)
+func hitUrl(url string) error {
+	fmt.Println("Checking:", url)
 
-	err = dictionary.Update("no", "bye")
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(dictionary.Search("no"))
+	resp, err := http.Get(url)
+
+	if err != nil || resp.StatusCode >= 400 {
+		return errHttp
 	}
 
-	dictionary.Delete("world")
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(dictionary.Search("world"))
-	}
+	return nil
 }
