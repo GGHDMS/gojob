@@ -1,53 +1,28 @@
 package main
 
 import (
-	"errors"
 	"fmt"
-	"net/http"
+	"time"
 )
-
-var errHttp = errors.New("http erro")
 
 func main() {
 
-	result := map[string]string{}
+	c := make(chan bool)
 
-	urls := []string{
-		"https://www.airbnb.com/",
-		"https://www.google.com/",
-		"https://www.amazon.com/",
-		"https://www.reddit.com/",
-		"https://www.google.com/",
-		"https://soundcloud.com/",
-		"https://www.facebook.com/",
-		"https://www.instagram.com/",
-		"https://academy.nomadcoders.co/",
+	names := []string{"seokmun", "jaeho"}
+
+	for _, n := range names {
+		go isSexy(n, c)
 	}
 
-	for _, url := range urls {
-		code := "OK"
-
-		err := hitUrl(url)
-
-		if err != nil {
-			code = "ERR"
-		}
-
-		result[url] = code
-	}
-
-	fmt.Println(result)
+	fmt.Println(<-c)
+	fmt.Println(<-c)
 
 }
 
-func hitUrl(url string) error {
-	fmt.Println("Checking:", url)
+func isSexy(user string, c chan bool) {
+	time.Sleep(time.Second * 5)
 
-	resp, err := http.Get(url)
-
-	if err != nil || resp.StatusCode >= 400 {
-		return errHttp
-	}
-
-	return nil
+	fmt.Println(user)
+	c <- true
 }
